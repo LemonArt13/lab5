@@ -1,25 +1,20 @@
-file_name = "text.txt"
-
-def find_tags(file_name, tag):
-    with open(file_name, "r") as file:
-        lines = file.readlines()
-        found_lines = []
-        for line in lines:
-            if line.startswith("#" + tag):
-                found_lines.append(line)
-    return found_lines
-
-
-
 while True:
     tag = input("Введіть назву тегу, який вам необхідний: ").lower()
-    if tag == "exit":
-        break
-    else:
-        found_lines = find_tags(file_name, tag)
+    tagged_input = "#" + tag
+    file = open("text.txt", "r")
+
+    try:
+        with file:
+            found_lines = [line for line in file if tagged_input in line.lower()]
+
         if found_lines:
-            print("Знайдено наступні абзаци: \n")
+            print("Знайдено наступні рядки: \n")
             for line in found_lines:
-                print(line.strip())
+                print(line)
+        elif tag == "exit":
+            break
         else:
             print("Такого тегу не існує")
+    except:
+        print("Помилка")
+
